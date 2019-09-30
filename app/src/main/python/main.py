@@ -1,10 +1,10 @@
 # import keras
 from tensorflow.python import keras
 
-from keras.datasets import cifar10
-from keras.models import Sequential
-from keras.layers import Dense,Dropout,Activation,Flatten
-from keras.layers import Conv2D, MaxPooling2D
+from tensorflow.python.keras.datasets import cifar10
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense,Dropout,Activation,Flatten
+from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
 
 import os
 def main():
