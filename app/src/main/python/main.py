@@ -1,5 +1,5 @@
-import keras
-import tensorflow
+# import keras
+from tensorflow.python import keras
 
 from keras.datasets import cifar10
 from keras.models import Sequential
@@ -40,20 +40,22 @@ def main():
     model.add(Dense(classes))
     model.add(Activation('softmax'))
 
-    opt=keras.optimizers.Adam(learning_rate=.0001,decay=1e-7)
-
-    model.compile(loss="categorical_crossentropy",optimizer=opt,metrics=['accuracy'])
-
+    # opt=keras.optimizers.Adam(lr=.0001,decay=1e-7)
+    
+    model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=['accuracy'])
+    
     xtr=xtr.astype('float32')
     xtst=xtst.astype('float32')
     xtr/=255
     xtst/=255
-
+    
     model.fit(xtr,ytr,batch_size=batch_size,epochs=epochs,validation_data=(xtst,ytst),shuffle=True)
 
+    
     scores=model.evaluate(xtst,ytst,verbose=1)
     print("Loss:",scores[0] )
     print("Accuracy:",scores[1])
     return scores[1]
 
 
+main()
