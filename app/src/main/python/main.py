@@ -1,7 +1,7 @@
 # import keras
 from tensorflow.python import keras
 
-from tensorflow.python.keras.datasets import cifar10
+from tensorflow.python.keras.datasets import mnist
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense,Dropout,Activation,Flatten
 from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
@@ -10,15 +10,20 @@ import os
 def main():
     batch_size=32
     classes=10
-    epochs=2
+    epochs=1
+    img_rows, img_cols = 28, 28
 
-    (xtr,ytr),(xtst,ytst)=cifar10.load_data()
+    (xtr,ytr),(xtst,ytst)=mnist.load_data()
+
+    xtr = xtr.reshape(xtr.shape[0], img_rows, img_cols, 1)
+    xtst = xtst.reshape(xtst.shape[0], img_rows, img_cols, 1)
+    input_shape = (img_rows, img_cols, 1)
 
     ytr=keras.utils.to_categorical(ytr,classes)
     ytst=keras.utils.to_categorical(ytst,classes)
 
     model=Sequential()
-    model.add(Conv2D(32,(3,3),input_shape=xtr.shape[1:]))
+    model.add(Conv2D(32,(3,3),input_shape=input_shape))
     model.add(Activation('relu'))
     model.add(Conv2D(32,(3,3)))
     model.add(Activation('relu'))
