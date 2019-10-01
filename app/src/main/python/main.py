@@ -17,11 +17,13 @@ class TimeStop(Callback):
     def on_train_begin(self, logs=None):
         self.start_time=time.time()
     def on_batch_end(self, batch, logs=None):
+        print(time.time()-self.start_time)
         if time.time()-self.start_time>self.seconds:
             self.model.stop_training=True
             print("Stopped after %s seconds"%(self.seconds))
 
-def main(second=300):
+def main(second=150):
+    print(second)
     batch_size=32
     classes=10
     epochs=5
