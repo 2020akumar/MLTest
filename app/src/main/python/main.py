@@ -21,7 +21,7 @@ class TimeStop(Callback):
             self.model.stop_training=True
             print("Stopped after %s seconds"%(self.seconds))
 
-def main():
+def main(second):
     batch_size=32
     classes=10
     epochs=5
@@ -67,7 +67,7 @@ def main():
     xtst=xtst.astype('float32')
     xtr/=255
     xtst/=255
-    second=int(input("How long"))
+
     stopper=TimeStop(seconds=second)
     model.fit(xtr,ytr,batch_size=batch_size,epochs=epochs,validation_data=(xtst,ytst),shuffle=True,callbacks=[stopper])
 
