@@ -21,7 +21,7 @@ class TimeStop(Callback):
             self.model.stop_training=True
             print("Stopped after %s seconds"%(self.seconds))
 
-def main(second):
+def main(second=300):
     batch_size=32
     classes=10
     epochs=5
