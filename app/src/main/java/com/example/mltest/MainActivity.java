@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                py.getModule("main").callAttr("main");
+                PyObject x=py.getModule("main").callAttr("main");
+                mButton.setText(x.toString());
             }
         });
     }
