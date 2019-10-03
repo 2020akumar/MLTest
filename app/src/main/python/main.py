@@ -80,4 +80,3 @@ def main(second=150):
     return scores[1]
 
 
-main()
