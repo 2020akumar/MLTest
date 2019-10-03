@@ -79,4 +79,4 @@ def main(second=150):
     print("Accuracy:",scores[1])
     return scores[1]
 
-main(second=30) 
+
