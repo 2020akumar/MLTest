@@ -6,13 +6,16 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private Python py;
     private Button mButton;
+    private EditText mEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,9 +27,43 @@ public class MainActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PyObject x=py.getModule("main").callAttr("main",new Kwarg("second",150));
-                mButton.setText(x.toString());
+//                mButton.setText("Training Started");
+//                PyObject y=py.getModule("main");
+                String seconds= mEdit.getText().toString();
+                int kw=Integer.parseInt(seconds);
+                new trainTask().execute(kw);
+//
+//                PyObject x=y.callAttr("main",new Kwarg("second",kw));
+//                mButton.setText(x.toString());
             }
         });
+        mEdit=(EditText)findViewById(R.id.edit);
+
+    }
+    private class trainTask extends AsyncTask<Integer,Void,Double>{
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            mButton.setText("Training Started");
+
+
+        }
+        @Override
+        protected Double doInBackground(Integer... params){
+                int time=params[0];
+                PyObject y=py.getModule("main");
+
+
+
+                PyObject x=y.callAttr("main",new Kwarg("second",time));
+                Double acc=Double.parseDouble(x.toString());
+                return acc;
+
+        }
+        @Override
+        protected void onPostExecute(Double acc){
+            super.onPostExecute(acc);
+            mButton.setText(acc.toString());
+        }
     }
 }
