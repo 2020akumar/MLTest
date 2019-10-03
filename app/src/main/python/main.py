@@ -73,9 +73,9 @@ def main(second=150):
     stopper=TimeStop(seconds=second)
     model.fit(xtr,ytr,batch_size=batch_size,epochs=epochs,validation_data=(xtst,ytst),shuffle=True,callbacks=[stopper])
 
-    scores=model.evaluate(xtst,ytst,verbose=1,steps=1)
+    scores=model.evaluate(xtst[0:1000],ytst[0:1000],verbose=1)
     print("Loss:",scores[0] )
     print("Accuracy:",scores[1])
     return scores[1]
 
-
+main(second=10)
