@@ -13,6 +13,22 @@
         android:text="Enter how many seconds to train for"
         android:id="@+id/edit"/>
 
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Enter how many conv. layers" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Enter how many dense. layers" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

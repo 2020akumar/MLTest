@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private Python py;
     private Button mButton;
     private EditText mEdit;
+    private EditText mEditConv;
+    private EditText mEditDense;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,14 +32,19 @@ public class MainActivity extends AppCompatActivity {
 //                mButton.setText("Training Started");
 //                PyObject y=py.getModule("main");
                 String seconds= mEdit.getText().toString();
+                String convs=mEditConv.getText().toString();
+                String dense=mEditDense.getText().toString();
                 int kw=Integer.parseInt(seconds);
-                new trainTask().execute(kw);
+                new trainTask().execute(kw,Integer.parseInt(convs),Integer.parseInt(dense));
 //
 //                PyObject x=y.callAttr("main",new Kwarg("second",kw));
 //                mButton.setText(x.toString());
             }
         });
         mEdit=(EditText)findViewById(R.id.edit);
+        mEditConv=(EditText)findViewById(R.id.editText);
+        mEditDense=(EditText)findViewById(R.id.editText2);
+
 
     }
     private class trainTask extends AsyncTask<Integer,Void,Double>{
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Double doInBackground(Integer... params){
                 int time=params[0];
+                int convols=params[1];
+                int denses=params[2];
                 PyObject y=py.getModule("main");
 
 
