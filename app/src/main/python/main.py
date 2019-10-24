@@ -22,7 +22,7 @@ class TimeStop(Callback):
             self.model.stop_training=True
             print("Stopped after %s seconds"%(self.seconds))
 
-def main(second=150):
+def main(second=150,conv=2,dens=2 ):
     print(second)
     batch_size=32
     classes=10
@@ -41,8 +41,9 @@ def main(second=150):
     model=Sequential()
     model.add(Conv2D(32,(3,3),input_shape=input_shape))
     model.add(Activation('relu'))
-    model.add(Conv2D(32,(3,3)))
-    model.add(Activation('relu'))
+    for aa in range(0,conv-1):
+        model.add(Conv2D(32,(3,3)))
+        model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
 
@@ -54,9 +55,9 @@ def main(second=150):
     # model.add(Dropout(0.25))
 
     model.add(Flatten())
-
-    model.add(Dense(512))
-    model.add(Activation("relu"))
+    for bb in range(1, dens):
+        model.add(Dense(512/bb))
+        model.add(Activation("relu"))
     model.add(Dropout(0.5))
     model.add(Dense(classes))
     model.add(Activation('softmax'))
