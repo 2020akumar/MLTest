@@ -1,6 +1,6 @@
 # import keras
 from tensorflow.python import keras
-
+import tensorflow as tf
 from tensorflow.python.keras.datasets import mnist
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense,Dropout,Activation,Flatten
@@ -23,6 +23,7 @@ class TimeStop(Callback):
             print("Stopped after %s seconds"%(self.seconds))
 
 def main(second=150,conv=2,dens=2 ):
+    tf.reset_default_graph()
     print(second)
     batch_size=32
     classes=10
@@ -63,15 +64,16 @@ def main(second=150,conv=2,dens=2 ):
     model.add(Activation('softmax'))
 
     # opt=keras.optimizers.Adam(lr=.0001,decay=1e-7)
-    
+
     model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=['accuracy'])
-    
+
     xtr=xtr.astype('float32')
     xtst=xtst.astype('float32')
     xtr/=255
     xtst/=255
 
     stopper=TimeStop(seconds=second)
+
     model.fit(xtr,ytr,batch_size=batch_size,epochs=epochs,validation_data=(xtst,ytst),shuffle=True,callbacks=[stopper])
 
     scores=model.evaluate(xtst[0:1000],ytst[0:1000],verbose=1)
@@ -79,3 +81,5 @@ def main(second=150,conv=2,dens=2 ):
     print("Accuracy:",scores[1])
     return scores[1]
 
+main(10, 2,2)
+main(10,2,3)
