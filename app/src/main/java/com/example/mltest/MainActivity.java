@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private Python py;
@@ -18,12 +19,14 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEdit;
     private EditText mEditConv;
     private EditText mEditDense;
+    private TextView mRes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Python.start(new AndroidPlatform(this));
         py=Python.getInstance();
+        mRes=(TextView)findViewById(R.id.res);
 //        py.getModule("main").callAttr("main");
         mButton=(Button)findViewById(R.id.button);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -65,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
 
                 PyObject x=y.callAttr("main",new Kwarg("second",time));
-                Double acc=Double.parseDouble(x.toString());
+                Double acc=Double.parseDouble(x.toString())*100.0;
                 return acc;
 
         }
         @Override
         protected void onPostExecute(Double acc){
             super.onPostExecute(acc);
-            mButton.setText(acc.toString());
+            mRes.setText(acc.toString()+"%");
         }
     }
 }

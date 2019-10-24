@@ -35,4 +35,10 @@
         android:layout_height="wrap_content"
         android:text="Start Train" />
 
+    <TextView
+        android:id="@+id/res"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Train Accuracy: 0.0" />
+
 </LinearLayout>
