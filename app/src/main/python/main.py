@@ -57,7 +57,7 @@ def main(second=150,conv=2,dens=2 ):
 
     model.add(Flatten())
     for bb in range(1, dens):
-        model.add(Dense(512/bb))
+        model.add(Dense(512//bb))
         model.add(Activation("relu"))
     model.add(Dropout(0.5))
     model.add(Dense(classes))
@@ -79,7 +79,10 @@ def main(second=150,conv=2,dens=2 ):
     scores=model.evaluate(xtst[0:1000],ytst[0:1000],verbose=1)
     print("Loss:",scores[0] )
     print("Accuracy:",scores[1])
+    del model
     return scores[1]
+
 
 #main(10, 2,2)
 #main(10,2,3)
+
