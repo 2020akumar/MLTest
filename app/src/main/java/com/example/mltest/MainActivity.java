@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
                 int time=params[0];
                 int convols=params[1];
                 int denses=params[2];
-                PyObject y=py.getModule("main");
+//                PyObject y=py.getModule("main");
 
 
-
-                PyObject x=y.callAttr("main",new Kwarg("second",time));
+                py=Python.getInstance();
+                PyObject x=py.getModule("main").callAttr("main",new Kwarg("second",time), new Kwarg("conv",convols), new Kwarg("dens",denses));
                 Double acc=Double.parseDouble(x.toString())*100.0;
                 return acc;
 

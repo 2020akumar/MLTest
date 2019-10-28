@@ -81,5 +81,5 @@ def main(second=150,conv=2,dens=2 ):
     print("Accuracy:",scores[1])
     return scores[1]
 
-main(10, 2,2)
-main(10,2,3)
+#main(10, 2,2)
+#main(10,2,3)
