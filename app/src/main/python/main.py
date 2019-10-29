@@ -9,6 +9,7 @@ from tensorflow.python.keras .callbacks import Callback
 import time
 import os
 import gc
+numt=0
 class TimeStop(Callback):
     def __init__(self,seconds=0):
         super(Callback,self).__init__()
@@ -24,7 +25,7 @@ class TimeStop(Callback):
             print("Stopped after %s seconds"%(self.seconds))
 
 def main(second=150,conv=2,dens=2 ):
-    tf.reset_default_graph()
+    tf.compat.v1.reset_default_graph()
     print(second)
     batch_size=32
     classes=10
@@ -40,7 +41,7 @@ def main(second=150,conv=2,dens=2 ):
     ytr=keras.utils.to_categorical(ytr,classes)
     ytst=keras.utils.to_categorical(ytst,classes)
 
-    model=Sequential()
+    model= Sequential()
     model.add(Conv2D(32,(3,3),input_shape=input_shape))
     model.add(Activation('relu'))
     for aa in range(0,conv-1):
@@ -63,10 +64,11 @@ def main(second=150,conv=2,dens=2 ):
     model.add(Dropout(0.5))
     model.add(Dense(classes))
     model.add(Activation('softmax'))
-
+    global numt
     # opt=keras.optimizers.Adam(lr=.0001,decay=1e-7)
-
-    model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=['accuracy'])
+    optimizers=["adam","nadam","adamax"]
+    model.compile(loss="categorical_crossentropy",optimizer=optimizers[numt%3],metrics=['accuracy'])
+    numt+=1
 
     xtr=xtr.astype('float32')
     xtst=xtst.astype('float32')
@@ -85,6 +87,6 @@ def main(second=150,conv=2,dens=2 ):
     return scores[1]
 
 #
-# main(10, 2,2)
-# main(10,2,3)
+main(10, 2,2)
+main(10,2,3)
 
