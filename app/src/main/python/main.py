@@ -25,6 +25,7 @@ class TimeStop(Callback):
             print("Stopped after %s seconds"%(self.seconds))
 
 def main(second=150,conv=2,dens=2 ):
+    print(tf.__version__)
     tf.compat.v1.reset_default_graph()
     print(second)
     batch_size=32
@@ -84,9 +85,10 @@ def main(second=150,conv=2,dens=2 ):
     print("Accuracy:",scores[1])
     del model
     gc.collect()
+
     return scores[1]
 
 #
-main(10, 2,2)
-main(10,2,3)
+# main(10, 2,2)
+# main(10,2,3)
 
