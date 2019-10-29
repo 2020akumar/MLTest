@@ -8,6 +8,7 @@ from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.python.keras .callbacks import Callback
 import time
 import os
+import gc
 class TimeStop(Callback):
     def __init__(self,seconds=0):
         super(Callback,self).__init__()
@@ -80,9 +81,10 @@ def main(second=150,conv=2,dens=2 ):
     print("Loss:",scores[0] )
     print("Accuracy:",scores[1])
     del model
+    gc.collect()
     return scores[1]
 
 
-#main(10, 2,2)
-#main(10,2,3)
+main(10, 2,2)
+main(10,2,3)
 
