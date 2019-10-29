@@ -26,7 +26,7 @@ class TimeStop(Callback):
 
 def main(second=150,conv=2,dens=2 ):
     print(tf.__version__)
-    tf.compat.v1.reset_default_graph()
+    tf.reset_default_graph()
     print(second)
     batch_size=32
     classes=10
