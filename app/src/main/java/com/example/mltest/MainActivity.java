@@ -66,16 +66,24 @@ public class MainActivity extends AppCompatActivity {
 //                PyObject y=py.getModule("main");
 
 
-                py=Python.getInstance();
-                PyObject x=py.getModule("main").callAttr("main",new Kwarg("second",time), new Kwarg("conv",convols), new Kwarg("dens",denses));
-                Double acc=Double.parseDouble(x.toString())*100.0;
+
+                PyObject x=py.getModule("main");
+                PyObject y=x.callAttr("main",new Kwarg("second",time), new Kwarg("conv",convols), new Kwarg("dens",denses));
+
+                Double acc=Double.parseDouble(y.toString())*100.0;
+                x.close();
+                y.close();
                 return acc;
 
         }
         @Override
         protected void onPostExecute(Double acc){
             super.onPostExecute(acc);
-            mRes.setText(acc.toString()+"%");
+            String fin=acc.toString();
+            if (fin.length()>5){
+                fin=fin.substring(0,6);
+            }
+            mRes.setText(fin+"%");
         }
     }
 }
