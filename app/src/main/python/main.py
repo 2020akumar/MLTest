@@ -9,7 +9,7 @@ from tensorflow.python.keras .callbacks import Callback
 import time
 import os
 import gc
-numt=0
+# numt=0
 class TimeStop(Callback):
     def __init__(self,seconds=0):
         super(Callback,self).__init__()
@@ -68,10 +68,10 @@ def main(second=150,conv=2,dens=2 ):
         model.add(Dropout(0.5))
         model.add(Dense(classes))
         model.add(Activation('softmax'))
-        global numt
+        # global numt
         # opt=keras.optimizers.Adam(lr=.0001,decay=1e-7)
-        optimizers=["adam","nadam","adamax"]
-        model.compile(loss="categorical_crossentropy",optimizer=optimizers[numt%3],metrics=['accuracy'])
+        # optimizers=["adam","nadam","adamax"]
+        model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=['accuracy'])
         numt+=1
 
         xtr=xtr.astype('float32')
