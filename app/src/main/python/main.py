@@ -72,7 +72,7 @@ def main(second=150,conv=2,dens=2 ):
         # opt=keras.optimizers.Adam(lr=.0001,decay=1e-7)
         # optimizers=["adam","nadam","adamax"]
         model.compile(loss="categorical_crossentropy",optimizer="adam",metrics=['accuracy'])
-        numt+=1
+        # numt+=1
 
         xtr=xtr.astype('float32')
         xtst=xtst.astype('float32')
