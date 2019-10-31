@@ -26,6 +26,7 @@ class TimeStop(Callback):
 
 def main(second=150,conv=2,dens=2 ):
     print(tf.__version__)
+    keras.backend.clear_session()
     tf.reset_default_graph()
     graph=tf.get_default_graph()
     with graph.as_default():
@@ -87,10 +88,12 @@ def main(second=150,conv=2,dens=2 ):
         print("Accuracy:",scores[1])
         del model
         gc.collect()
-
+        # keras.backend.clear_session()
+        # tf.reset_default_graph()
+        # graph = tf.get_default_graph()
         return scores[1]
 
 #
-# main(10, 2,2)
-# main(10,2,3)
+main(10, 2,2)
+main(10,2,3)
 
