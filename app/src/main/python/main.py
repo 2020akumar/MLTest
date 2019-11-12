@@ -9,6 +9,7 @@ from tensorflow.python.keras .callbacks import Callback
 import time
 import os
 import gc
+import random
 # numt=0
 class TimeStop(Callback):
     def __init__(self,seconds=0):
@@ -82,8 +83,8 @@ def main(second=150,conv=2,dens=2 ):
         stopper=TimeStop(seconds=second)
 
         model.fit(xtr,ytr,batch_size=batch_size,epochs=epochs,validation_data=(xtst,ytst),shuffle=True,callbacks=[stopper])
-
-        scores=model.evaluate(xtst[0:1000],ytst[0:1000],verbose=1)
+        randomSam=random.randint(0,len(xtst)-1000)
+        scores=model.evaluate(xtst[randomSam:randomSam+1000],ytst[randomSam:randomSam+1000],verbose=1)
         print("Loss:",scores[0] )
         print("Accuracy:",scores[1])
         del model
@@ -93,7 +94,7 @@ def main(second=150,conv=2,dens=2 ):
         # graph = tf.get_default_graph()
         return scores[1]
 
-#
-# main(10, 2,2)
-# main(10,2,3)
+
+main(10, 2,2)
+main(10,2,3)
 
