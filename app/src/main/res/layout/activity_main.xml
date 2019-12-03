@@ -7,27 +7,28 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <EditText
+        android:id="@+id/edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter how many seconds to train for"
-        android:id="@+id/edit"/>
+        android:hint="Train Time (seconds)" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Enter how many conv. layers" />
+        android:hint="Convolutional Layers"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editText2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Enter how many dense. layers" />
+        android:hint="Dense Layers"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/button"
@@ -40,5 +41,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Train Accuracy: 0.0" />
+
+    <ProgressBar
+        android:id="@+id/trainPercent"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

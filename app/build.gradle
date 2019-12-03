@@ -11,13 +11,40 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a"
         }
         python {
-            pip {
+            pyc{
 
-                install "numpy"
-                install "tensorflow"
+                stdlib true
+                pip true
+                src true
+
+            }
+            pip {
+                    install "tensorflow"
+
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\astor-0.8.0-py2.py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\protobuf-3.6.0-py2.py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\six-1.9.0-py2.py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\setuptools-41.6.0-py2.py3-none-any.whl"
+//
+//                install"C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\Werkzeug-0.11.10-py2.py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\Markdown-2.6.11-py2.py3-none-any.whl"
+//
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\wheel-0.26.0-py2.py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\chaquopy_openblas-0.2.20-0-py2.py3-none-android_15_armeabi_v7a.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\chaquopy_libgfortran-4.9.3-7-py2.py3-none-android_15_armeabi_v7a.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\absl_py-0.1.6-py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\chaquopy_gnustl-4.9.3-2-py2.py3-none-android_15_armeabi_v7a.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\grpcio-1.12.1-1-cp36-cp36m-android_15_armeabi_v7a.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\termcolor-1.1.0-py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\gast-0.2.0-py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\numpy-1.14.2-1-cp36-cp36m-android_15_armeabi_v7a.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\tensorboard-1.10.0-py3-none-any.whl"
+//                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\tensorflow-1.10.1-7-cp36-cp36m-android_15_armeabi_v7a.whl"
+
+//                install "tensorflow"
             }
         }
     }

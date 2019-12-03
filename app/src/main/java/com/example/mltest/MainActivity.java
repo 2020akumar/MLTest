@@ -6,11 +6,13 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
+import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditConv;
     private EditText mEditDense;
     private TextView mRes;
+    private ProgressBar mTrainPercent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         Python.start(new AndroidPlatform(this));
         py=Python.getInstance();
         mRes=(TextView)findViewById(R.id.res);
+        mTrainPercent=(ProgressBar)findViewById(R.id.trainPercent);
 //        py.getModule("main").callAttr("main");
         mButton=(Button)findViewById(R.id.button);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         @Override
+        @TargetApi(24)
         protected void onPostExecute(Double acc){
             super.onPostExecute(acc);
             String fin=acc.toString();
@@ -84,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 fin=fin.substring(0,6);
             }
             mRes.setText(fin+"%");
+
+            mTrainPercent.setProgress(Integer.parseInt(fin),true);
+            mButton.setText("Train Again");
         }
     }
 }
