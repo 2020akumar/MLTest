@@ -10,6 +10,8 @@ import time
 import os
 import gc
 import random
+import cv2
+import numpy as np
 # numt=0
 class TimeStop(Callback):
     def __init__(self,seconds=0):
@@ -87,14 +89,50 @@ def main(second=150,conv=2,dens=2 ):
         scores=model.evaluate(xtst[randomSam:randomSam+1000],ytst[randomSam:randomSam+1000],verbose=1)
         print("Loss:",scores[0] )
         print("Accuracy:",scores[1])
+        model.save('model.h5')
         del model
         gc.collect()
         # keras.backend.clear_session()
         # tf.reset_default_graph()
         # graph = tf.get_default_graph()
+
         return scores[1]
 
 
-# main(10, 2,2)
+
+def run(filename):
+    img_rows, img_cols = 28, 28
+    new_model=tf.keras.models.load_model("model.h5")
+    img=cv2.cvtColor(cv2.imread(filename),cv2.COLOR_BGR2GRAY)
+    img=cv2.resize(img,(img_rows,img_cols),interpolation=cv2.INTER_AREA)
+    cv2.imshow("ayo",img)
+    cv2.waitKey(0)
+    print('here')
+    print(img.shape)
+    img=np.asarray(img)
+    print(img.shape)
+
+    img=np.expand_dims(img,axis=0)
+    img=np.expand_dims(img,axis=4)
+    # classes = 10
+    # (xtr, ytr), (xtst, ytst) = mnist.load_data()
+    #
+    # xtr = xtr.reshape(xtr.shape[0], img_rows, img_cols, 1)
+    # xtst = xtst.reshape(xtst.shape[0], img_rows, img_cols, 1)
+    # randomSam = random.randint(0, len(xtst) - 1000)
+    # ytr = keras.utils.to_categorical(ytr, classes)
+    # ytst = keras.utils.to_categorical(ytst, classes)
+    # scores = new_model.evaluate(xtst[randomSam:randomSam + 1000], ytst[randomSam:randomSam + 1000], verbose=1)
+    # print("Loss:", scores[0])
+    # print("Accuracy:", scores[1])
+    # print( new_model.summary())
+    result=new_model.predict(img,1)
+    print(result)
+    print(np.where(result==1)[1][0])
+
+
+#main(10, 2,2)
+#run("C:\\Users\\adity\\Documents\\mn.png")
 # main(10,2,3)
+#C:\Users\adity\Downloads\test.jpg
 
