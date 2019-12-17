@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
     private Python py;
     private Button mButton;
@@ -51,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         mEdit=(EditText)findViewById(R.id.edit);
         mEditConv=(EditText)findViewById(R.id.editText);
         mEditDense=(EditText)findViewById(R.id.editText2);
+        File file =new File("model");
+        String x=file.getAbsolutePath();
+        String y=file.getPath();
 
 
     }
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 PyObject y=x.callAttr("main",new Kwarg("second",time), new Kwarg("conv",convols), new Kwarg("dens",denses));
 
                 Double acc=Double.parseDouble(y.toString())*100.0;
+                //x.callAttr("run","");
                 x.close();
                 y.close();
                 return acc;
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
             mRes.setText(fin+"%");
 
-            mTrainPercent.setProgress(Integer.parseInt(fin),true);
+            mTrainPercent.setProgress(Integer.parseInt(fin));
             mButton.setText("Train Again");
         }
     }

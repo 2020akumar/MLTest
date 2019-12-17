@@ -1,4 +1,5 @@
 # import keras
+from android.os import Environment
 from tensorflow.python import keras
 import tensorflow as tf
 from tensorflow.python.keras.datasets import mnist
