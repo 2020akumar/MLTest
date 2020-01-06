@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 PyObject x=py.getModule("main");
-                PyObject y=x.callAttr("main",new Kwarg("second",time), new Kwarg("conv",convols), new Kwarg("dens",denses));
+                PyObject   y=x.callAttr("main",new Kwarg("second",time), new Kwarg("conv",convols), new Kwarg("dens",denses));
 
                 Double acc=Double.parseDouble(y.toString())*100.0;
                 //x.callAttr("run","");
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
             mRes.setText(fin+"%");
 
-            mTrainPercent.setProgress(Integer.parseInt(fin));
+            mTrainPercent.setProgress((int)(Double.parseDouble(fin)));
             mButton.setText("Train Again");
         }
     }

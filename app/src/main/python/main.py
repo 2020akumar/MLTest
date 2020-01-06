@@ -90,7 +90,7 @@ def main(second=150,conv=2,dens=2 ):
         scores=model.evaluate(xtst[randomSam:randomSam+1000],ytst[randomSam:randomSam+1000],verbose=1)
         print("Loss:",scores[0] )
         print("Accuracy:",scores[1])
-        model.save('model.h5')
+        #model.save('model.h5')
         del model
         gc.collect()
         # keras.backend.clear_session()
