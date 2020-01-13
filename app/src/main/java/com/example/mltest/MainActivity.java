@@ -7,8 +7,11 @@ import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditDense;
     private TextView mRes;
     private ProgressBar mTrainPercent;
+    private Button mGetFilePath;
+    private TextView mFilePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +58,22 @@ public class MainActivity extends AppCompatActivity {
         mEdit=(EditText)findViewById(R.id.edit);
         mEditConv=(EditText)findViewById(R.id.editText);
         mEditDense=(EditText)findViewById(R.id.editText2);
+        mGetFilePath=(Button)findViewById(R.id.getFilePath);
+        mFilePath=(TextView) findViewById(R.id.filePath);
         File file =new File("model");
         String x=file.getAbsolutePath();
         String y=file.getPath();
+        mGetFilePath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,0);
+            }
+        });
 
 
     }
+
     private class trainTask extends AsyncTask<Integer,Void,Double>{
         @Override
         protected void onPreExecute(){
@@ -99,5 +114,15 @@ public class MainActivity extends AppCompatActivity {
             mTrainPercent.setProgress((int)(Double.parseDouble(fin)));
             mButton.setText("Train Again");
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+
+            Uri target= data.getData();
+
+            mFilePath.setText(target.getPath().toString());
+
     }
 }
