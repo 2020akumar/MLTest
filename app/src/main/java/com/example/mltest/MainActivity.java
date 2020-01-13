@@ -123,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
             Uri target= data.getData();
 
             mFilePath.setText(target.getPath().toString());
+            PyObject x=py.getModule("main");
+            PyObject shape= x.callAttr("test",target.getPath().toString());
+            mFilePath.setText(shape.toString());
 
     }
 }
