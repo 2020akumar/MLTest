@@ -131,15 +131,18 @@ def run(filename):
     print(result)
     print(np.where(result==1)[1][0])
 
-def test(filename):
-    direct=str(Environment.getExternalStorageDirectory())
-    print(os.listdir(direct))
-    print (os.listdir("storage/emulated/0/DCIM"))
-    print(filename)
-   # img=cv2.cvtColor(cv2.imread(direct+filename),cv2.COLOR_BGR2GRAY)
-    img=cv2.imread(direct+filename)
-    print(img.shape)
-    return str(image.shape)
+
+def test(bytes):
+   #  direct=str(Environment.getExternalStorageDirectory())
+   #  print(os.listdir(direct));
+   #  print (os.listdir("storage/emulated/0/DCIM"))
+   # # img=cv2.cvtColor(cv2.imread(direct+filename),cv2.COLOR_BGR2GRAY)
+   #  img=cv2.imread(direct+filename)
+   #  print(img.shape)
+   #  return str(image.shape)
+    img=cv2.imdecode(np.frombuffer(bytes,np.uint8),-1)
+    img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+    print(img_rgb)
 
 #main(10, 2,2)
 #run("C:\\Users\\adity\\Documents\\mn.png")
