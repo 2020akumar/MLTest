@@ -133,8 +133,9 @@ def run(filename):
 
 def test(filename):
     direct=str(Environment.getExternalStorageDirectory())
-    print(os.listdir(direct));
+    print(os.listdir(direct))
     print (os.listdir("storage/emulated/0/DCIM"))
+    print(filename)
    # img=cv2.cvtColor(cv2.imread(direct+filename),cv2.COLOR_BGR2GRAY)
     img=cv2.imread(direct+filename)
     print(img.shape)

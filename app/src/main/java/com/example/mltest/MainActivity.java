@@ -17,8 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.graphics.Bitmap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private Python py;
@@ -60,9 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mEditDense=(EditText)findViewById(R.id.editText2);
         mGetFilePath=(Button)findViewById(R.id.getFilePath);
         mFilePath=(TextView) findViewById(R.id.filePath);
-        File file =new File("model");
-        String x=file.getAbsolutePath();
-        String y=file.getPath();
+
         mGetFilePath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,13 +121,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-
+        Bitmap bitmap = null;
             Uri target= data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), target);
+            }
+            catch( Exception e){
+
+        }
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        bitmap.recycle();
 
             mFilePath.setText(target.getPath().toString());
-            PyObject x=py.getModule("main");
-            PyObject shape= x.callAttr("test",target.getPath().toString());
-            mFilePath.setText(shape.toString());
+            //PyObject x=py.getModule("main");
+            //PyObject shape= x.callAttr("test",target.getPath().toString());
+            //mFilePath.setText(shape.toString());
 
     }
 }
