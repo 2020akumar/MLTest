@@ -129,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
             catch( Exception e){
 
         }
-        //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        //bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        //byte[] byteArray = stream.toByteArray();
-        //bitmap.recycle();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        bitmap.recycle();
         PyObject x=py.getModule("main");
-        PyObject   y=x.callAttr("test",bitmap);
+        PyObject   y=x.callAttr("test",byteArray);
             mFilePath.setText(target.getPath().toString());
             //PyObject x=py.getModule("main");
             //PyObject shape= x.callAttr("test",target.getPath().toString());

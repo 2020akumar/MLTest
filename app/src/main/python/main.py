@@ -141,10 +141,13 @@ def test(byte):
    #  img=cv2.imread(direct+filename)
    #  print(img.shape)
    #  return str(image.shape)
+   
    print(type(byte))
-   im=np.array(byte)
-
-   print(im)
+   byte=bytes(byte)
+   print(type(byte))
+   img=cv2.imdecode(np.frombuffer(byte,np.uint8),-1)
+   img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+   print(img_rgb)
 
 #main(10, 2,2)
 #run("C:\\Users\\adity\\Documents\\mn.png")
