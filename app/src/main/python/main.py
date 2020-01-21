@@ -91,6 +91,9 @@ def main(second=150,conv=2,dens=2 ):
         print("Loss:",scores[0] )
         print("Accuracy:",scores[1])
         #model.save('model.h5')
+   
+        d = str(Environment.getExternalStorageDirectory())
+        model.save(d+"/model.h5")
         del model
         gc.collect()
         # keras.backend.clear_session()
@@ -101,13 +104,15 @@ def main(second=150,conv=2,dens=2 ):
 
 
 
-def run(filename):
+def run(byte):
+    byter=(bytes)byte
+    keras.backend.clear_session()
     img_rows, img_cols = 28, 28
-    new_model=tf.keras.models.load_model("model.h5")
-    img=cv2.cvtColor(cv2.imread(filename),cv2.COLOR_BGR2GRAY)
-    img=cv2.resize(img,(img_rows,img_cols),interpolation=cv2.INTER_AREA)
-    cv2.imshow("ayo",img)
-    cv2.waitKey(0)
+    d = str(Environment.getExternalStorageDirectory())
+    new_model=tf.keras.models.load_model(d+"/model.h5")
+    img=cv2.imdecode(np.frombuffer(byter,np.uint8),-1)
+    img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+
     print('here')
     print(img.shape)
     img=np.asarray(img)
@@ -147,7 +152,8 @@ def test(byte):
    print(type(byte))
    img=cv2.imdecode(np.frombuffer(byte,np.uint8),-1)
    img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-   print(img_rgb)
+   print(img_rgb.shape)
+   
 
 #main(10, 2,2)
 #run("C:\\Users\\adity\\Documents\\mn.png")

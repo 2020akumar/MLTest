@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
         bitmap.recycle();
         PyObject x=py.getModule("main");
-        PyObject   y=x.callAttr("test",byteArray);
+        PyObject   y=x.callAttr("run",byteArray);
             mFilePath.setText(target.getPath().toString());
             //PyObject x=py.getModule("main");
             //PyObject shape= x.callAttr("test",target.getPath().toString());
