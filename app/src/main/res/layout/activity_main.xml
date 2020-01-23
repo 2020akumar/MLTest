@@ -55,9 +55,9 @@
         android:text="Find File" />
 
     <TextView
-        android:id="@+id/filePath"
+        android:id="@+id/prediction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="filePath" />
+        android:text="Prediction:" />
 
 </LinearLayout>

@@ -20,9 +20,6 @@ import android.widget.TextView;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private Python py;
@@ -33,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mRes;
     private ProgressBar mTrainPercent;
     private Button mGetFilePath;
-    private TextView mFilePath;
+    private TextView mPrediction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mEditConv=(EditText)findViewById(R.id.editText);
         mEditDense=(EditText)findViewById(R.id.editText2);
         mGetFilePath=(Button)findViewById(R.id.getFilePath);
-        mFilePath=(TextView) findViewById(R.id.filePath);
+        mPrediction=(TextView) findViewById(R.id.prediction);
 
         mGetFilePath.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,10 +132,10 @@ public class MainActivity extends AppCompatActivity {
         bitmap.recycle();
         PyObject x=py.getModule("main");
         PyObject   y=x.callAttr("run",byteArray);
-            mFilePath.setText(target.getPath().toString());
+            mPrediction.setText("Prediction: "+y.toString());
             //PyObject x=py.getModule("main");
             //PyObject shape= x.callAttr("test",target.getPath().toString());
-            //mFilePath.setText(shape.toString());
+            //mPrediction.setText(shape.toString());
 
     }
 }
