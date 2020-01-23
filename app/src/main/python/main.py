@@ -113,6 +113,9 @@ def run(byte):
     img=cv2.imdecode(np.frombuffer(byter,np.uint8),-1)
     img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     img = cv2.resize(img_rgb, (img_rows, img_cols), interpolation=cv2.INTER_AREA)
+    print("writing image")
+    cv2.imwrite(d+"/processedImage.jpg", img)
+    print("saved")
     print('here')
     print(img.shape)
     img=np.asarray(img)
@@ -133,9 +136,7 @@ def run(byte):
     # print("Loss:", scores[0])
     # print("Accuracy:", scores[1])
     # print( new_model.summary())
-    print("writing image")
-    cv2.imwrite(d+"/processedImage.jpg", img)
-    print("saved")
+
     result=new_model.predict(img,1)
     print(result)
 
