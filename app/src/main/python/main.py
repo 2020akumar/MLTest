@@ -112,7 +112,7 @@ def run(byte):
     new_model=tf.keras.models.load_model(d+"/model.h5")
     img=cv2.imdecode(np.frombuffer(byter,np.uint8),-1)
     img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-
+    img = cv2.resize(img_rgb, (img_rows, img_cols), interpolation=cv2.INTER_AREA)
     print('here')
     print(img.shape)
     img=np.asarray(img)
@@ -132,7 +132,7 @@ def run(byte):
     # print("Loss:", scores[0])
     # print("Accuracy:", scores[1])
     # print( new_model.summary())
-    result=new_model.predict(img[0],1)
+    result=new_model.predict(img,1)
     print(result)
     print(np.where(result==1)[1][0])
     
