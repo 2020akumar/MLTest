@@ -105,7 +105,7 @@ def main(second=150,conv=2,dens=2 ):
 
 
 def run(byte):
-    byter=(bytes)byte
+    byter=bytes(byte)
     keras.backend.clear_session()
     img_rows, img_cols = 28, 28
     d = str(Environment.getExternalStorageDirectory())
