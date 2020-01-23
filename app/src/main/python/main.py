@@ -120,6 +120,7 @@ def run(byte):
 
     img=np.expand_dims(img,axis=0)
     img=np.expand_dims(img,axis=4)
+
     # classes = 10
     # (xtr, ytr), (xtst, ytst) = mnist.load_data()
     #
@@ -134,7 +135,8 @@ def run(byte):
     # print( new_model.summary())
     result=new_model.predict(img,1)
     print(result)
-    print(np.where(result==1)[1][0])
+
+    print(np.argmax(result))
     
 
 
