@@ -140,7 +140,7 @@ def run(byte):
     result=new_model.predict(img,1)
     print(result)
 
-    print(np.argmax(result[0]))
+    return np.argmax(result[0])
     
 
 
