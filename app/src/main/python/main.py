@@ -133,10 +133,11 @@ def run(byte):
     # print("Loss:", scores[0])
     # print("Accuracy:", scores[1])
     # print( new_model.summary())
+    cv2.imwrite(d+"/processedImage.jpg", img)
     result=new_model.predict(img,1)
     print(result)
 
-    print(np.argmax(result))
+    print(np.argmax(result[0]))
     
 
 
