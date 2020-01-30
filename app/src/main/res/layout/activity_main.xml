@@ -52,7 +52,7 @@
         android:id="@+id/getFilePath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Find File" />
+        android:text="Test Model" />
 
     <TextView
         android:id="@+id/prediction"

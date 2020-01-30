@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
     private Python py;
@@ -72,7 +73,40 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private class testTask extends AsyncTask<Uri, Void, Integer>{
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            mGetFilePath.setText("Testing Started");
+        }
 
+        @Override
+        protected Integer doInBackground(Uri... uris) {
+            Bitmap bitmap = null;
+            Uri target = uris[0];
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), target);
+            }
+            catch( Exception e){
+
+            }
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            bitmap.recycle();
+            PyObject x=py.getModule("main");
+            PyObject   y=x.callAttr("run",byteArray);
+            return Integer.parseInt(y.toString());
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            mPrediction.setText("Prediction: "+integer.toString());
+            mGetFilePath.setText("Test Again");
+        }
+    }
     private class trainTask extends AsyncTask<Integer,Void,Double>{
         @Override
         protected void onPreExecute(){
@@ -118,21 +152,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-        Bitmap bitmap = null;
-            Uri target= data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), target);
-            }
-            catch( Exception e){
 
-        }
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        bitmap.recycle();
-        PyObject x=py.getModule("main");
-        PyObject   y=x.callAttr("run",byteArray);
-            mPrediction.setText("Prediction: "+y.toString());
+            Uri target= data.getData();
+            new testTask().execute(target);
+
             //PyObject x=py.getModule("main");
             //PyObject shape= x.callAttr("test",target.getPath().toString());
             //mPrediction.setText(shape.toString());
