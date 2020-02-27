@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mTrainPercent;
     private Button mGetFilePath;
     private TextView mPrediction;
+    private ProgressBar mLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         mEditDense=(EditText)findViewById(R.id.editText2);
         mGetFilePath=(Button)findViewById(R.id.getFilePath);
         mPrediction=(TextView) findViewById(R.id.prediction);
+        mLoading=(ProgressBar)findViewById(R.id.progressBar);
+        mLoading.setVisibility(View.GONE);
 
         mGetFilePath.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute(){
             super.onPreExecute();
             mGetFilePath.setText("Testing Started");
+            mLoading.setVisibility(View.VISIBLE);
+
         }
 
         @Override
@@ -105,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(integer);
             mPrediction.setText("Prediction: "+integer.toString());
             mGetFilePath.setText("Test Again");
+            mLoading.setVisibility(View.GONE);
         }
     }
     private class trainTask extends AsyncTask<Integer,Void,Double>{
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute(){
             super.onPreExecute();
             mButton.setText("Training Started");
+            mLoading.setVisibility(View.VISIBLE);
 
 
         }
@@ -146,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
             mTrainPercent.setProgress((int)(Double.parseDouble(fin)));
             mButton.setText("Train Again");
+            mLoading.setVisibility(View.GONE);
         }
     }
 
