@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mGetFilePath;
     private TextView mPrediction;
     private ProgressBar mLoading;
+    private Button mDrawTest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +67,26 @@ public class MainActivity extends AppCompatActivity {
         mLoading=(ProgressBar)findViewById(R.id.progressBar);
         mLoading.setVisibility(View.GONE);
 
-        mGetFilePath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            mGetFilePath.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent,0);
             }
         });
+            mDrawTest = (Button)findViewById(R.id.getDraw);
+            mDrawTest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*
+
+                    CALL INTENT
+                    CALL TRAIN TASK
+
+
+                     */
+                }
+            });
 
 
     }
@@ -160,9 +174,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+            if(requestCode==0) {
+                Uri target = data.getData();
+                new testTask().execute(target);
+            }
 
-            Uri target= data.getData();
-            new testTask().execute(target);
 
             //PyObject x=py.getModule("main");
             //PyObject shape= x.callAttr("test",target.getPath().toString());
