@@ -136,6 +136,7 @@ def run(byte):
     # print("Loss:", scores[0])
     # print("Accuracy:", scores[1])
     # print( new_model.summary())
+    run(bytearray)
 
     result=new_model.predict(img,1)
     print(result)
