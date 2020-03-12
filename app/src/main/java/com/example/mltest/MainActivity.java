@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
     private Python py;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mTrainPercent;
     private Button mGetFilePath;
     private TextView mPrediction;
+    private ProgressBar mLoading;
+    private Button mDrawTest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,23 +66,77 @@ public class MainActivity extends AppCompatActivity {
         mEditDense=(EditText)findViewById(R.id.editText2);
         mGetFilePath=(Button)findViewById(R.id.getFilePath);
         mPrediction=(TextView) findViewById(R.id.prediction);
+        mLoading=(ProgressBar)findViewById(R.id.progressBar);
+        mLoading.setVisibility(View.GONE);
 
-        mGetFilePath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            mGetFilePath.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent,0);
             }
         });
+            mDrawTest = (Button)findViewById(R.id.getDraw);
+            mDrawTest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    /*
+
+
+
+
+                     */
+                    Intent i = new Intent(MainActivity.this,DrawActivity.class);
+                    startActivityForResult(i,143);
+
+                }
+            });
 
 
     }
+    private class testTask extends AsyncTask<Uri, Void, Integer>{
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            mGetFilePath.setText("Testing Started");
+            mLoading.setVisibility(View.VISIBLE);
 
+        }
+
+        @Override
+        protected Integer doInBackground(Uri... uris) {
+            Bitmap bitmap = null;
+            Uri target = uris[0];
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), target);
+            }
+            catch( Exception e){
+
+            }
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream);
+            byte[] byteArray = stream.toByteArray();
+            bitmap.recycle();
+            PyObject x=py.getModule("main");
+            PyObject   y=x.callAttr("run",byteArray);
+            return Integer.parseInt(y.toString());
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            mPrediction.setText("Prediction: "+integer.toString());
+
+            mLoading.setVisibility(View.GONE);
+        }
+    }
     private class trainTask extends AsyncTask<Integer,Void,Double>{
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
             mButton.setText("Training Started");
+            mLoading.setVisibility(View.VISIBLE);
 
 
         }
@@ -112,27 +171,23 @@ public class MainActivity extends AppCompatActivity {
 
             mTrainPercent.setProgress((int)(Double.parseDouble(fin)));
             mButton.setText("Train Again");
+            mLoading.setVisibility(View.GONE);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-        Bitmap bitmap = null;
-            Uri target= data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), target);
+            if(requestCode==0) {
+                Uri target = data.getData();
+                new testTask().execute(target);
             }
-            catch( Exception e){
+            else{
+                Uri target = Uri.parse("file://"+Environment.getExternalStorageDirectory()+ File.separator +"drawing.JPEG");
+                new testTask().execute(target);
+            }
 
-        }
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        bitmap.recycle();
-        PyObject x=py.getModule("main");
-        PyObject   y=x.callAttr("run",byteArray);
-            mPrediction.setText("Prediction: "+y.toString());
+
             //PyObject x=py.getModule("main");
             //PyObject shape= x.callAttr("test",target.getPath().toString());
             //mPrediction.setText(shape.toString());

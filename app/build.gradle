@@ -14,7 +14,7 @@ android {
             abiFilters "armeabi-v7a"
         }
         python {
-            pyc{
+            pyc {
 
                 stdlib true
                 pip true
@@ -22,10 +22,10 @@ android {
 
             }
             pip {
-                    install "tensorflow"
-                    install "opencv-python"
-                    install "numpy"
-                    install "h5py"
+                install "tensorflow"
+                install "opencv-python"
+                install "numpy"
+                install "h5py"
 
 //                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\astor-0.8.0-py2.py3-none-any.whl"
 //                install "C:\\Users\\1441777\\AndroidStudioProjects\\MLTest\\protobuf-3.6.0-py2.py3-none-any.whl"

@@ -113,6 +113,7 @@ def run(byte):
     img=cv2.imdecode(np.frombuffer(byter,np.uint8),-1)
     img_rgb=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     img = cv2.resize(img_rgb, (img_rows, img_cols), interpolation=cv2.INTER_AREA)
+    img=cv2.bitwise_not(img)
     print("writing image")
     cv2.imwrite(d+"/processedImage.jpg", img)
     print("saved")
