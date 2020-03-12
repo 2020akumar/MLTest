@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,11 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     /*
 
-                    CALL INTENT
-                    CALL TRAIN TASK
+
 
 
                      */
+                    Intent i = new Intent(MainActivity.this,DrawActivity.class);
+                    startActivityForResult(i,143);
+
                 }
             });
 
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
             mPrediction.setText("Prediction: "+integer.toString());
-            mGetFilePath.setText("Test Again");
+
             mLoading.setVisibility(View.GONE);
         }
     }
@@ -176,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
             if(requestCode==0) {
                 Uri target = data.getData();
+                new testTask().execute(target);
+            }
+            else{
+                Uri target = Uri.parse("file://"+Environment.getExternalStorageDirectory()+ File.separator +"drawing.JPEG");
                 new testTask().execute(target);
             }
 
